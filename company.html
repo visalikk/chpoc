@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>  
+<head>
+  <title>Company Information</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style type="text/css">
+      .modal{
+        display: block;
+        background: rgba(0, 0, 0, 0.3);
+      }
+      .modal-body{
+        overflow: scroll;
+        height: 500px;
+      }
+  </style>
+
+</head>  
+    <body ng-app="comApp" >    	
+        <div ng-controller="compController">
+            <h1 align=center><strong>Company Registry</strong></h1>
+            <style>
+                body {background-color: lightblue;}
+
+            </style>
+            <style>
+                .button1 {
+                        background-color: #4D81BF;
+                        border: 2px solid #008CBA;
+                        color: white;
+                        padding: 14px 30px ;
+                        text-align: center;
+                        text-decoration: none;
+                        display: inline-block;
+                        font-size: 14px;
+                        margin: 4px 2px;
+                        cursor: pointer;
+                        }
+            </style>            
+    		<center><strong>Company Id</strong>
+            <input type="text" ng-model="comp_id" placeholder="Enter Registered Company Id"></center>
+            <center><button class = "button1" type="button" name = "button" ng-click="getData()">SEARCH</button></center>           
+
+            <h2><strong>Company Details</strong></h2>          
+            
+            <table>
+                <tr>
+                    <td>Company Name  --------------------  </td>
+                    <td><strong>{{companyhouse.company_name}}</strong></td>
+                </tr>  
+                <tr>
+                    <td>Date of Incorporation  ------------  </td>
+                    <td><strong>{{companyhouse.date_of_creation}}</strong></td>
+                </tr>  
+                <tr>
+                    <td>SIC Codes  ----------------------------  </td>
+                    <td ng-repeat="s in companyhouse.sic_codes"><strong>{{s}}</strong></td>
+                </tr>
+
+                <tr>
+                    <td>Address  -------------------------------  </td>
+                    <td><strong>{{companyhouse.registered_office_address.address_line_1}}</strong></td>
+                </tr>
+                    <tr><td></td><td><strong>{{companyhouse.registered_office_address.address_line_2}}</strong></td></tr>
+                    <tr><td></td><td><strong>{{companyhouse.registered_office_address.locality}}</strong></td></tr>
+                    <tr><td></td><td><strong>{{companyhouse.registered_office_address.postal_code}}</strong></td></tr>
+                    <tr><td></td><td><strong>{{companyhouse.registered_office_address.country}}</strong></td></tr>
+                
+            </table> 
+            
+            <style>
+            .blockHead:after {
+                color: #4D81BF;
+                 border-left: 20px solid;
+                 border-top: 20px solid transparent;
+                 border-bottom: 20px solid transparent;
+                 display: inline-block;
+                 content: '';
+                 position: absolute;
+                 right: -20px;
+                 cursor: pointer;
+            }
+            .blockHead {
+                background-color: #4D81BF;
+                width: 150px;
+                height: 40px;
+                display: inline-block;
+                position: relative;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+    /* align horizontal */
+                align-items: center;
+    /* align vertical */
+                cursor: pointer;
+             }
+
+            .blocktext {
+                color: white;
+                font-weight: bold;
+                padding-left: 20px;
+                font-family: Arial;
+                font-size: 18;
+                cursor: pointer;
+            }
+            </style>
+            
+            <div class="blockHead" >
+                <span class="blocktext" ng-click="getHistory()">
+                    Click here for History
+                </span>
+            </div>
+            
+
+
+            <h2><strong>Officers </strong></h2> 
+            <center>
+            <table cellpadding="0" cellspacing="0" border="1">
+                <tr>
+                    <th>Name</th>
+                    <th>Officer Role</th>
+                    <th>Nationality</th>
+                    <th>Appointement</th>
+                </tr>
+
+                <tbody ng-repeat="o in companyhouse.officeitems">
+                    <tr>
+                        <td>{{o.name}}</td>
+                        <td>{{o.officer_role}}</td>
+                        <td>{{o.nationality}}</td>
+                        <td ng-click="getInfo(o.links.officer.appointments)"><u><font color="blue">{{o.links.officer.appointments}}</font></u></td>
+                    </tr>
+                </tbody>
+
+
+            </table>        
+            </center>
+            <h2><strong>Charges </strong></h2> 
+            <center>
+            <table cellpadding="0" cellspacing="0" border="1">
+                <tr>
+                    <th>persons entitled</th>
+                    <th>status</th>
+                    <th>type</th>
+                    <th>description</th>
+                    <th>File</th>
+                </tr>
+
+                <tbody ng-repeat="i in companyhouse.items">
+                    <tr>
+                        <td ng-repeat="k in i.persons_entitled">{{k.name}}</td>
+                        <td>{{i.status}}</td>
+                        <td>{{i.secured_details.type}}</td>
+                        <td>{{i.secured_details.description}}</td>
+                        <td ng-click="getChargesF(i.transactions[0].links.filing)"><u><font color="blue">{{i.transactions[0].links.filing}}</font></u></td>
+                    </tr>
+                </tbody>
+
+
+            </table>
+
+            </center>
+
+            <h2><strong>Accounts </strong></h2> 
+            <center>
+            <table cellpadding="0" cellspacing="0" border="1">
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>File</th>
+                    </tr>
+
+                <tbody ng-repeat="ac in companyhouse.accountInfo">
+                    <tr>
+                        <td>{{ac.date}}</td>
+                        <td>{{ac.description}}</td>
+                        <td ng-click="getDocument(ac.links.document_metadata)"><u><font color="blue">{{ac.links.document_metadata}}</font></u></td>
+                        
+                    </tr>
+                </tbody>
+
+
+            </table> 
+            </center> 
+            <center><strong>**********************************************End of Company Details**********************************************</strong>        
+            <div class="modal"  role="dialog" ng-if="companyInfo">
+                <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" ng-click="closePopup()">&times;</button>
+                <h4 class="modal-title">{{appointmentdata.name}}</h4>
+                </div>
+                <div class="modal-body">
+                
+            <table cellpadding="0" cellspacing="0" border="1">
+                <tr>
+                    <th>Company Name</th>
+                    <th>Company Number</th>
+                    <th>Company Status</th>
+                    <th>Officer Role</th>
+                </tr>
+
+                <tbody ng-repeat="a in appointmentdata.items">
+                    <tr>
+                        <td>{{a.appointed_to.company_name}}</td>
+                        <td>{{a.appointed_to.company_number}}</td>
+                        <td>{{a.appointed_to.company_status}}</td>
+                        <td>{{a.officer_role}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closePopup()">Close</button>
+                </div>
+                </div></div>
+        </div>
+
+
+        <div class="modal"  role="dialog" ng-if="filingInfo">
+                <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="closePopuphist()">&times;</button>
+                    <h4 class="modal-title">Company ID : {{companyhouse.company_number}}</h4>
+                </div>
+                <div class="modal-body">
+                
+                    <table cellpadding="0" cellspacing="0" border="1">
+                        <tr>
+                            <th>category</th>
+                            <th>description</th> 
+                            <th>Date</th>                   
+                        </tr>
+
+                        <tbody ng-repeat="f in companyhouse.filingitems">
+                            <tr>
+                                <td>{{f.category}}</td>
+                                <td>{{f.description}}</td> 
+                                <td>{{f.date}}</td>                       
+                            </tr>
+                        </tbody>
+
+
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closePopuphist()">Close</button>
+                </div>
+                
+            </div>
+
+
+        </div> 
+
+
+
+
+    	
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>   
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+
+
+    <script src="companyhousecont.js">  </script>
+
+    </body> 
+
+</html>    

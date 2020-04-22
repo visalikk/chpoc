@@ -1,0 +1,24 @@
+{
+  "name": "ng-companyhouse",
+  "version": "1.0.0",
+  "description": "POC on Company house data UK using Angular Js",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "*",
+    "bootstrap": "^4.1.0",
+    "express": "*",
+    "http-server": "^0.11.1",
+    "jquery": "*",
+    "jsdom": "*",
+    "mongoose": "*",
+    "request": "^2.85.0",
+    "angular": "~1.4.0",
+    "angular-ui-bootstrap": "~0.14"
+  },
+  "devdepencies": {},
+  "author": "Visa",
+  "license": "ISC"
+}
