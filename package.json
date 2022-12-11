@@ -10,7 +10,7 @@
     "body-parser": "*",
     "bootstrap": "^4.1.0",
     "express": "*",
-    "http-server": "^0.11.1",
+    "http-server": "^0.11.2",
     "jquery": "*",
     "jsdom": "*",
     "mongoose": "*",
